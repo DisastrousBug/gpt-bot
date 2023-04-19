@@ -12,7 +12,7 @@ class TelegramBotController extends Controller
     public function webhook(Request $request)
     {
         // Create an instance of the Telegram Bot API
-        $telegram = new Api(env('TELEGRAM_BOT_TOKEN'));
+        $telegram = new Api('6046988830:AAHqVVUOT9hBzRnyVlc4C9JolNhyEYWcxKk');
 
         // Get the incoming update from Telegram
         $update = new Update(json_decode($request->getContent(), true), $telegram);
@@ -24,13 +24,20 @@ class TelegramBotController extends Controller
 
             // Call the OpenAI API to get response
             $client = new Client(['headers' => [
-                'Authorization' => 'Bearer '.env('OPENAI_API_KEY'),
+                'Authorization' => 'Bearer '.'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',
                 'Content-Type' => 'application/json',
             ]]);
 
-            $response = $client->post('https://api.openai.com/v1/engines/davinci-codex/completions', [
+            $response = $client->post('https://api.openai.com/v1/chat/completions', [
                 'json' => [
-                    'prompt' => 'Conversation:\nUser: '.$message.'\nBot:',
+//                    'prompt' => 'Conversation:\nUser: '.$message.'\nBot:',
+		    'model' => 'gpt-3.5-turbo',
+		    'messages' => [
+			[
+				"role" => "user",
+				"content" => $message
+		    	]
+		    ],
                     'max_tokens' => 50,
                     'temperature' => 0.7,
                     'stop' => ['\n'],

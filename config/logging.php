@@ -126,6 +126,12 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+	'openai.api_requestor' => [
+        	'driver' => 'single',
+	    	'path' => storage_path('logs/openai.log'),
+        	'level' => 'debug',
+	],
+
     ],
 
 ];
