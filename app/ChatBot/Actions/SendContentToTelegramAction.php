@@ -2,6 +2,8 @@
 
 namespace App\ChatBot\Actions;
 
+use Illuminate\Support\Str;
+use Telegram\Bot\FileUpload\InputFile;
 use Psr\Http\Message\ResponseInterface;
 use App\ChatBot\DTOs\TelegramMessageDTO;
 use App\ChatBot\Helpers\TelegramApiClient;
@@ -26,8 +28,10 @@ class SendContentToTelegramAction
                 'reply_to_message_id' => $messageDTO->messageId,
             ]);
         } else {
+            $file = InputFile::create(((json_decode((string) ($chatGPTResponse?->getBody())))->data[0])->url, Str::random());
+
             $this->telegramApiClient->sendPhoto([
-		        'photo' => ((json_decode((string) ($chatGPTResponse?->getBody())))->data[0])->url,
+                'photo'               => $file,
                 'chat_id'             => $messageDTO->chatId,
                 'reply_to_message_id' => $messageDTO->messageId,
             ]);

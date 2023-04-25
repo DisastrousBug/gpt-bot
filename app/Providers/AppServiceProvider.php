@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Telegram\Bot\Api;
 use App\ChatBot\Helpers\OpenAIClient;
 use Illuminate\Support\ServiceProvider;
 use App\ChatBot\Helpers\TelegramApiClient;

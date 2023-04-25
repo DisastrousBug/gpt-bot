@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\ChatBot\Helpers\TelegramApiClient;
 use Illuminate\Http\Request;
 use Telegram\Bot\Objects\Update;
 use App\ChatBot\Actions\ChatGPTAction;
+use App\ChatBot\Helpers\TelegramApiClient;
 use App\ChatBot\Factories\TelegramMessageFactory;
 
 class TelegramBotController extends Controller

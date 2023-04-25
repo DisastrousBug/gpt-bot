@@ -18,8 +18,8 @@ class GenerateImageAction
         $response = $this->openAIClient->post('https://api.openai.com/v1/images/generations', [
             'json' => [
                 'prompt' => 'Photo of cats',
-                'n' => 1,
-                'size'  => '1024x1024',
+                'n'      => 1,
+                'size'   => '1024x1024',
             ],
         ]);
 
