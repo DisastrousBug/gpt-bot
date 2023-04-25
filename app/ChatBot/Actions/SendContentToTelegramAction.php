@@ -28,6 +28,16 @@ class SendContentToTelegramAction
                 'reply_to_message_id' => $messageDTO->messageId,
             ]);
         } else {
+
+            if ($chatGPTResponse->getStatusCode() === 400) {
+                $this->telegramApiClient->sendMessage([
+                    'chat_id'             => $messageDTO->chatId,
+                    'text'                => 'Не могу сгенерировать фото',
+                    'reply_to_message_id' => $messageDTO->messageId,
+                ]);
+
+                return;
+            }
             $file = InputFile::create(((json_decode((string) ($chatGPTResponse?->getBody())))->data[0])->url, Str::random());
 
             $this->telegramApiClient->sendPhoto([
