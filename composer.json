@@ -47,7 +47,7 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
-        "php-cs-fixer": "pint -v --config vendor/napopravku/php-coding-style/pint.json"
+        "php-cs-fixer": "pint -v --config pint.json"
     },
     "extra": {
         "laravel": {
