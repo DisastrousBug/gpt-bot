@@ -24,7 +24,7 @@ class TelegramBotController extends Controller
             $telegramUpdateDto->chatId = $update->getMessage()->getChat()->getId();
             $telegramUpdateDto->replyText = $update->message->from->firstName . ",\n\n";
 
-            if (! str_contains($telegramUpdateDto->message, '@Art39GPT_bot')) {
+            if (!str_contains($telegramUpdateDto->message, '@Art39GPT_bot')) {
                 return response('');
             }
 
