@@ -15,17 +15,11 @@ class GenerateImageAction
 
     public function execute(TelegramMessageDTO $messageDTO): void
     {
-        $response = $this->openAIClient->post('https://api.openai.com/v1/chat/completions', [
+        $response = $this->openAIClient->post('https://api.openai.com/v1/images/generations', [
             'json' => [
-                'model'    => 'image-alpha-001',
-                'messages' => [
-                    [
-                        'role'    => 'user',
-                        'content' => str_replace('@Art39GPT_bot', '', $messageDTO->message),
-                    ],
-                ],
-                'max_tokens'  => 512,
-                'temperature' => 0.5,
+                'prompt' => str_replace('/generate', '',str_replace('@Art39GPT_bot', '', $messageDTO->message)),
+                'n' => 1,
+                'size'  => '1024x1024',
             ],
         ]);
 

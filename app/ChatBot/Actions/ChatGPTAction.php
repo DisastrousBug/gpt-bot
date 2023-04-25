@@ -15,7 +15,7 @@ class ChatGPTAction
     public function execute(TelegramMessageDTO $messageDTO): void
     {
         if (str_contains($messageDTO->message, '/generate')) {
-//            $this->generateImageAction->execute($messageDTO);
+            $this->generateImageAction->execute($messageDTO);
         } else {
             $this->generateTextAction->execute($messageDTO);
         }

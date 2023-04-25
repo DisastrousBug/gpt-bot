@@ -26,12 +26,12 @@ class SendContentToTelegramAction
                 'reply_to_message_id' => $messageDTO->messageId,
             ]);
         } else {
-//            $this->telegramApiClient->sendMessage([
-//		'text' => (string) ($chatGPTResponse?->getBody()),
-//                'photo'               => (((json_decode((string) ($chatGPTResponse?->getBody())))->choices[0])->text),
-//                'chat_id'             => $messageDTO->chatId,
- //               'reply_to_message_id' => $messageDTO->messageId,
- //           ]);
+            $this->telegramApiClient->sendMessage([
+		        'photo' => ((json_decode((string) ($chatGPTResponse?->getBody())))->data[0])->url,
+                'chat_id'             => $messageDTO->chatId,
+                'reply_to_message_id' => $messageDTO->messageId,
+            ]);
         }
+
     }
 }
