@@ -25,11 +25,7 @@ class TelegramBotController extends Controller
             $message = $update->getMessage()->getText();
             $messageId = $update->message->messageId;
 
-            if(!(str_contains($message, '@Art39GPT_bot') || str_contains($message, '@Art39GPT_bot test'))) {
-                return response('');
-            }
-
-            if(str_contains($message, '@Art39GPT_bot')) {
+            if(!str_contains($message, '@Art39GPT_bot test')) {
                 $telegram->sendMessage([
                     'chat_id' => $update->getMessage()->getChat()->getId(),
                     'text' => 'Извините, создатель АПИ делает улучшения, поэтому пока я не работаю'
