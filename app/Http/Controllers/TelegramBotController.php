@@ -25,8 +25,8 @@ class TelegramBotController extends Controller
             $message = $update->getMessage()->getText();
             $messageId = $update->message->messageId;
 
-            if(!str_contains($message, '@Art39GPT_bot')) {
-                return response('');
+            if(!str_contains($message, '@Art39GPT_bot test')) {
+                return response('Извините, создатель АПИ делает улучшения, поэтому пока я не работаю');
             }
             // Call the OpenAI API to get response
             $client = new Client(['headers' => [
