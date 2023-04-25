@@ -23,9 +23,11 @@ class TelegramBotController extends Controller
         if ($update->getMessage() && $update->getMessage()->getText()) {
             // Get user message from Telegram
             $message = $update->getMessage()->getText();
-	    if(!str_contains($message, '@Art39GPT_bot')) {
-		return response('');
-	    }
+            $messageId = $update->message->messageId;
+
+            if(!str_contains($message, '@Art39GPT_bot')) {
+                return response('');
+            }
             // Call the OpenAI API to get response
             $client = new Client(['headers' => [
                 'Authorization' => 'Bearer '.'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',
@@ -34,14 +36,13 @@ class TelegramBotController extends Controller
 
             $response = $client->post('https://api.openai.com/v1/chat/completions', [
                 'json' => [
-//                    'prompt' => 'Conversation:\nUser: '.$message.'\nBot:',
-		    'model' => 'gpt-3.5-turbo',
-		    'messages' => [
-			[
-				"role" => "user",
-				"content" => $message
-			]
-		    ],
+                    'model' => 'gpt-3.5-turbo',
+                    'messages' => [
+                    [
+                        "role" => "user",
+                        "content" => $message
+                    ]
+                    ],
                     'max_tokens' => 1500,
                     'temperature' => 0.7,
                 ],
@@ -49,7 +50,8 @@ class TelegramBotController extends Controller
 
             $telegram->sendMessage([
                 'chat_id' => $update->getMessage()->getChat()->getId(),
-                'text' => ((json_decode((string)($response?->getBody())))->choices[0])->message->content //[0]->message , 
+                'text' => ((json_decode((string)($response?->getBody())))->choices[0])->message->content,
+                'reply_to_message_id' => $messageId
             ]);
         }
 
