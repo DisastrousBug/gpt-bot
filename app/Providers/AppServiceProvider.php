@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(TelegramApiClient::class, function () {
-            return new Api('6046988830:AAHqVVUOT9hBzRnyVlc4C9JolNhyEYWcxKk');
+            return new TelegramApiClient('6046988830:AAHqVVUOT9hBzRnyVlc4C9JolNhyEYWcxKk');
         });
     }
 
