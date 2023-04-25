@@ -49,7 +49,7 @@ class TelegramBotController extends Controller
                     'messages' => [
                     [
                         "role" => "user",
-                        "content" => $message
+                        "content" => str_replace('@Art39GPT_bot', '',$message)
                     ]
                     ],
                     'max_tokens' => 1500,
