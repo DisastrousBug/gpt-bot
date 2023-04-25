@@ -26,7 +26,7 @@ class SendContentToTelegramAction
                 'reply_to_message_id' => $messageDTO->messageId,
             ]);
         } else {
-            $this->telegramApiClient->sendMessage([
+            $this->telegramApiClient->sendPhoto([
 		        'photo' => ((json_decode((string) ($chatGPTResponse?->getBody())))->data[0])->url,
                 'chat_id'             => $messageDTO->chatId,
                 'reply_to_message_id' => $messageDTO->messageId,
