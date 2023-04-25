@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ChatBot\Helpers\TelegramApiClient;
 use Illuminate\Http\Request;
 use Telegram\Bot\Objects\Update;
 use App\ChatBot\Actions\ChatGPTAction;
@@ -9,10 +10,14 @@ use App\ChatBot\Factories\TelegramMessageFactory;
 
 class TelegramBotController extends Controller
 {
+    public function __construct(protected TelegramApiClient $telegramApiClient)
+    {
+    }
+
     public function webhook(Request $request, ChatGPTAction $action)
     {
         // Get the incoming update from Telegram
-        $update = new Update(json_decode($request->getContent(), true));
+        $update = new Update(json_decode($request->getContent(), true), $this->telegramApiClient);
 
         // Check if the message is a text message from the user
         if ($update->getMessage() && $update->getMessage()->getText()) {
