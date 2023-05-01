@@ -28,10 +28,9 @@ class TelegramBotController extends Controller
             $telegramUpdateDto->messageId = $update->message->messageId;
             $telegramUpdateDto->chatId = $update->getMessage()->getChat()->getId();
             $telegramUpdateDto->replyText = $update->message->from->firstName . ",\n\n";
-	    if (!str_contains($telegramUpdateDto->message, '/info')) {
-		return response("Привет, бот позволяет получать текстовый ответ, а также он может генерировать картинки. Чтобы общаться с ним напишите @(Тег бота) и свой текст, если хотите получить сгенерированную картинку, то добавьте к тегу бота команду /generate и через пробел дальше напишите картинку, которую хотите получить.	
-");
-	    }
+            if (!str_contains($telegramUpdateDto->message, '/info')) {
+                return response("Привет, бот позволяет получать текстовый ответ, а также он может генерировать картинки. Чтобы общаться с ним напишите @(Тег бота) и свой текст, если хотите получить сгенерированную картинку, то добавьте к тегу бота команду /generate и через пробел дальше напишите картинку, которую хотите получить.");
+            }
             if (!str_contains($telegramUpdateDto->message, '@Art39GPT_bot')) {
                 return response('');
             }
