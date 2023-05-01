@@ -17,7 +17,7 @@ class GenerateImageAction
     {
         $response = $this->openAIClient->post('https://api.openai.com/v1/images/generations', [
             'json' => [
-                'prompt' => 'Photo of cats',
+                'prompt' => str_replace('/generate', '',str_replace('@Art39GPT_bot', '', $messageDTO->message)),
                 'n'      => 1,
                 'size'   => '1024x1024',
             ],
