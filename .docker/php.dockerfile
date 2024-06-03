@@ -15,14 +15,18 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 # MacOS staff group's gid is 20, so is the dialout group in alpine linux. We're not using it, let's just remove it.
 RUN delgroup dialout
 
+RUN apk add --no-cache postgresql-dev
+
 RUN addgroup -g ${GID} --system docker
 RUN adduser -G docker --system -D -s /bin/sh -u ${UID} dockerino
 
-RUN sed -i "s/user = www-data/user = docker/g" /usr/local/etc/php-fpm.d/www.conf
-RUN sed -i "s/group = www-data/group = docker/g" /usr/local/etc/php-fpm.d/www.conf
-RUN echo "php_admin_flag[log_errors] = on" >> /usr/local/etc/php-fpm.d/www.conf
+#RUN sed -i "s/user = www-data/user = docker/g" /usr/local/etc/php-fpm.d/www.conf
+#RUN sed -i "s/group = www-data/group = docker/g" /usr/local/etc/php-fpm.d/www.conf
+#RUN echo "php_admin_flag[log_errors] = on" >> /usr/local/etc/php-fpm.d/www.conf
 
-RUN docker-php-ext-install php-pgsql
+#RUN docker-php-ext-install pgsql pdo pdo_pgsql
+
+RUN docker-php-ext-install pgsql pdo_pgsql
 
 RUN mkdir -p /usr/src/php/ext/redis \
     && curl -L https://github.com/phpredis/phpredis/archive/5.3.4.tar.gz | tar xvz -C /usr/src/php/ext/redis --strip 1 \

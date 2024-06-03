@@ -101,8 +101,8 @@ services:
           - PPOSGTRES_ROOT_PASSWORD=password
           - SERVICE_NAME=chatgpt
           - SERVICE_TAGS=dev
-      volumes:
-          - ./postgres:/var/lib/postgresql/data
+#      volumes:
+#          - ./postgres:/var/lib/postgresql/data
       networks:
           - laravel
 
