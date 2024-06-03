@@ -6,7 +6,7 @@ networks:
 services:
   app:
     build:
-      context: ./dockerfiles
+      context: ./.docker
       dockerfile: nginx.dockerfile
       args:
         - UID=${UID:-1000}
@@ -18,7 +18,7 @@ services:
     depends_on:
       - php
       - redis
-      - ppostgres
+      - postgres
       - mailhog
     networks:
       - laravel
@@ -37,7 +37,7 @@ services:
           - laravel
   php:
     build:
-      context: ./dockerfiles
+      context: ./.docker
       dockerfile: php.dockerfile
       args:
         - UID=${UID:-1000}
@@ -59,7 +59,7 @@ services:
 
   composer:
     build:
-      context: ./dockerfiles
+      context: ./.docker
       dockerfile: php.dockerfile
       args:
         - UID=${UID:-1000}
@@ -74,7 +74,7 @@ services:
 
   artisan:
     build:
-      context: ./dockerfiles
+      context: ./.docker
       dockerfile: php.dockerfile
       args:
         - UID=${UID:-1000}
