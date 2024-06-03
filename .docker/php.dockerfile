@@ -16,10 +16,10 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 RUN delgroup dialout
 
 RUN addgroup -g ${GID} --system dockerino
-RUN adduser -G laravel --system -D -s /bin/sh -u ${UID} dockerino
+RUN adduser -G docker --system -D -s /bin/sh -u ${UID} dockerino
 
-RUN sed -i "s/user = www-data/user = laravel/g" /usr/local/etc/php-fpm.d/www.conf
-RUN sed -i "s/group = www-data/group = laravel/g" /usr/local/etc/php-fpm.d/www.conf
+RUN sed -i "s/user = www-data/user = docker/g" /usr/local/etc/php-fpm.d/www.conf
+RUN sed -i "s/group = www-data/group = docker/g" /usr/local/etc/php-fpm.d/www.conf
 RUN echo "php_admin_flag[log_errors] = on" >> /usr/local/etc/php-fpm.d/www.conf
 
 RUN docker-php-ext-install php-pgsql
@@ -29,6 +29,6 @@ RUN mkdir -p /usr/src/php/ext/redis \
     && echo 'redis' >> /usr/src/php-available-exts \
     && docker-php-ext-install redis
 
-USER laravel
+USER dockerino
 
 CMD ["php-fpm", "-y", "/usr/local/etc/php-fpm.conf", "-R"]

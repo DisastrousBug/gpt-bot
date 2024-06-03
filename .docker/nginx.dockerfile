@@ -10,7 +10,7 @@ ENV GID=${GID}
 RUN delgroup dialout
 
 RUN addgroup -g ${GID} --system dockerino
-RUN adduser -G laravel --system -D -s /bin/sh -u ${UID} dockerino
+RUN adduser -G docker --system -D -s /bin/sh -u ${UID} dockerino
 RUN sed -i "s/user  nginx/user laravel/g" /etc/nginx/nginx.conf
 
 ADD ./nginx/default.conf /etc/nginx/conf.d/
