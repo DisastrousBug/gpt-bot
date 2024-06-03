@@ -1,0 +1,38 @@
+version: '3.7'
+services:
+    nginx:
+        image: nginx:stable-alpine
+        ports:
+            - "8000:80"
+        volumes:
+            - ./src:/var/www/html
+            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - php
+            - postgres
+        networks:
+            - laravel
+    php:
+        image: php:8.2-fpm
+
+
+    postgres:
+        image: postgres:latest
+        container_name: postgres
+        restart: unless-stopped
+        tty: true
+        ports:
+            -  "5432:5432"
+        environment:
+            - POSTGRES_PASSWORD=password
+            - POSTGRES_USER=user
+            - POSTGRES_DB=chatgpt
+            - PPOSGTRES_ROOT_PASSWORD=password
+            - SERVICE_NAME=chatgpt
+            - SERVICE_TAGS=dev
+        volumes:
+            - ./postgres:/var/lib/postgresql/data
+        networks:
+            - laravel
+
+
