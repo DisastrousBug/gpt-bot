@@ -98,11 +98,9 @@ services:
           - POSTGRES_PASSWORD=password
           - POSTGRES_USER=user
           - POSTGRES_DB=chatgpt
-          - PPOSGTRES_ROOT_PASSWORD=password
+          - POSGTRES_ROOT_PASSWORD=password
           - SERVICE_NAME=chatgpt
           - SERVICE_TAGS=dev
-      volumes:
-          - ./postgres:/var/lib/postgresql/data
       networks:
           - laravel
 
