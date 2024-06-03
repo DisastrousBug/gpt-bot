@@ -24,7 +24,7 @@ class SendContentToTelegramAction
         if ($sendType === self::SEND_TEXT) {
             $this->telegramApiClient->sendMessage([
                 'chat_id'             => $messageDTO->chatId,
-                'text'                => $messageDTO->replyText . (((json_decode((string) ($chatGPTResponse?->getBody())))->choices[0])->message->content),
+                'text'                => $messageDTO->replyText . substr((((json_decode((string) ($chatGPTResponse?->getBody())))->choices[0])->message->content), 0, 4000),
                 'reply_to_message_id' => $messageDTO->messageId,
             ]);
         } else {

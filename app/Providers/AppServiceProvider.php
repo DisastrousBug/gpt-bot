@@ -15,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(OpenAIClient::class, function () {
             return new OpenAIClient(['headers' => [
-                'Authorization' => 'Bearer ' . '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',
+                'Authorization' => 'Bearer ' . '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',
                 'Content-Type'  => 'application/json',
             ]]);
         });

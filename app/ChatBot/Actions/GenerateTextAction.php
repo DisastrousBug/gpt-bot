@@ -24,7 +24,7 @@ class GenerateTextAction
                         'content' => str_replace('@Art39GPT_bot', '', $messageDTO->message),
                     ],
                 ],
-                'max_tokens'  => 1500,
+                'max_tokens'  => 1200,
                 'temperature' => 0.7,
             ],
         ]);
