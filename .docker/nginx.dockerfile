@@ -11,7 +11,7 @@ RUN delgroup dialout
 
 RUN addgroup -g ${GID} --system docker
 RUN adduser -G docker --system -D -s /bin/sh -u ${UID} dockerino
-RUN sed -i "s/user  nginx/user laravel/g" /etc/nginx/nginx.conf
+RUN sed -i "s/user  nginx/user docker/g" /etc/nginx/nginx.conf
 
 ADD ./nginx/default.conf /etc/nginx/conf.d/
 
