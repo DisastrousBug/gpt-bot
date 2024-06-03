@@ -9,7 +9,7 @@ ENV GID=${GID}
 # MacOS staff group's gid is 20, so is the dialout group in alpine linux. We're not using it, let's just remove it.
 RUN delgroup dialout
 
-RUN addgroup -g ${GID} --system dockerino
+RUN addgroup -g ${GID} --system docker
 RUN adduser -G docker --system -D -s /bin/sh -u ${UID} dockerino
 RUN sed -i "s/user  nginx/user laravel/g" /etc/nginx/nginx.conf
 
