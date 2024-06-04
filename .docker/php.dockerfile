@@ -20,6 +20,9 @@ RUN apk add --no-cache postgresql-dev
 RUN addgroup -g ${GID} --system docker
 RUN adduser -G docker --system -D -s /bin/sh -u ${UID} dockerino
 
+
+RUN chown -R www-data:www-data /var/www/html/
+RUN chmod -R 775 /var/www/html
 #RUN sed -i "s/user = www-data/user = docker/g" /usr/local/etc/php-fpm.d/www.conf
 #RUN sed -i "s/group = www-data/group = docker/g" /usr/local/etc/php-fpm.d/www.conf
 #RUN echo "php_admin_flag[log_errors] = on" >> /usr/local/etc/php-fpm.d/www.conf
