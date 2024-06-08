@@ -22,6 +22,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./certs:/etc/nginx/certs
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
     environment:
       - NGINX_PROXY_CONTAINER=nginx-proxy
     depends_on:
@@ -36,8 +38,8 @@ services:
       args:
         - UID=${UID:-1000}
         - GID=${GID:-1000}
-#    ports:
- #     - "80:80"
+    ports:
+      - "8080:80"
     volumes:
       - ./src:/var/www/html:delegated
     depends_on:
@@ -125,7 +127,8 @@ services:
           - POSTGRES_PASSWORD=password
           - POSTGRES_USER=chatbot_user
           - POSTGRES_DB=chatbot
-          - POSGTRES_ROOT_PASSWORD=password
+          - POSTGRES_ROOT_PASSWORD=password
+          - ./.docker/pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
           - SERVICE_NAME=chatgpt
           - SERVICE_TAGS=dev
       volumes:

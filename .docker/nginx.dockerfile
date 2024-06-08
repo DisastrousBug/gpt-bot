@@ -11,10 +11,13 @@ RUN delgroup dialout
 
 RUN addgroup -g ${GID} --system docker
 RUN adduser -G docker --system -D -s /bin/sh -u ${UID} dockerino
-RUN sed -i "s/user  nginx/user docker/g" /etc/nginx/nginx.conf
+#RUN sed -i "s/user  nginx/dockerino docker/g" /etc/nginx/nginx.conf
 
 ADD ./nginx/default.conf /etc/nginx/conf.d/
 
 RUN mkdir -p /var/www/html
 
 #expose 82;
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
