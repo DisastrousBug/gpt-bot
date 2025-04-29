@@ -2,10 +2,10 @@
 
 namespace App\Common\Factories;
 
-use Illuminate\Http\Request;
 use App\Common\DTOs\AbstractDTO;
-use Illuminate\Support\Collection;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 interface Factory
 {

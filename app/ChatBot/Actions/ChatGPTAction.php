@@ -9,8 +9,7 @@ class ChatGPTAction
     public function __construct(
         protected GenerateImageAction $generateImageAction,
         protected GenerateTextAction $generateTextAction
-    ) {
-    }
+    ) {}
 
     public function execute(TelegramMessageDTO $messageDTO): void
     {

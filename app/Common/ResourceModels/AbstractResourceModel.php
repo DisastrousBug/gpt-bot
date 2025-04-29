@@ -2,15 +2,21 @@
 
 namespace App\Common\ResourceModels;
 
+use BackedEnum;
 use Carbon\Carbon;
-use JsonSerializable;
-use Illuminate\Support\Str;
+use Symfony\Component\Mime\Address;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Str;
+use JsonSerializable;
 
-abstract class AbstractResourceModel implements JsonSerializable, Arrayable
+abstract class AbstractResourceModel implements Arrayable, JsonSerializable
 {
     protected const SKIP = [];
 
+
+    /**
+     * @return array
+     */
     public function jsonSerialize(): array
     {
         return $this->toArray();
@@ -21,7 +27,7 @@ abstract class AbstractResourceModel implements JsonSerializable, Arrayable
         $propMap = [];
 
         foreach (get_object_vars($this) as $propName => $prop) {
-            if (! in_array($propName, static::SKIP, true)) {
+            if (!in_array($propName, static::SKIP, true)) {
                 $propMap[$propName] = Str::snake($propName);
             }
         }
@@ -31,10 +37,14 @@ abstract class AbstractResourceModel implements JsonSerializable, Arrayable
         foreach ($propMap as $originName => $transformName) {
             $origin = $this->{$originName};
 
-            if ($origin instanceof Carbon) {
-                $origin = $origin->toISOString(true);
-            } elseif ($origin instanceof Arrayable) {
+            if ($origin instanceof Arrayable) {
                 $origin = $origin->toArray();
+            } elseif ($origin instanceof BackedEnum) {
+                $origin = $origin->value;
+            } elseif ($origin instanceof Carbon) {
+                $origin = $origin->toISOString(true);
+            } elseif ($origin instanceof Address) {
+                $origin = $origin->getAddress();
             }
 
             $result[$transformName] = $origin;

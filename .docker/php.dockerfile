@@ -1,4 +1,4 @@
-FROM php:8.2-alpine
+FROM php:8.4-fpm-alpine
 
 ARG UID
 ARG GID
@@ -31,10 +31,12 @@ RUN chmod -R 775 /var/www/html
 
 RUN docker-php-ext-install pgsql pdo_pgsql
 
-RUN mkdir -p /usr/src/php/ext/redis \
-    && curl -L https://github.com/phpredis/phpredis/archive/5.3.4.tar.gz | tar xvz -C /usr/src/php/ext/redis --strip 1 \
-    && echo 'redis' >> /usr/src/php-available-exts \
-    && docker-php-ext-install redis
+# ─── Redis extension ─────────────────────────────────────────────────────
+RUN set -eux; \
+    apk add --no-cache --virtual .build-deps $PHPIZE_DEPS; \
+    pecl install redis; \
+    docker-php-ext-enable redis; \
+    apk del .build-deps
 
 USER dockerino
 

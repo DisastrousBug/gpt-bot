@@ -2,12 +2,12 @@
 
 namespace App\Common\Factories;
 
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Common\DTOs\AbstractDTO;
-use Illuminate\Support\Collection;
-use Illuminate\Foundation\Http\FormRequest;
 use App\Common\ResourceModels\AbstractResourceModel;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 abstract class AbstractFactory implements Factory
 {
@@ -49,8 +49,8 @@ abstract class AbstractFactory implements Factory
             $key = Str::studly($key);
             $lcFirstKey = lcfirst($key);
 
-            if (method_exists(static::class, 'set' . $key)) {
-                $value = static::{'set' . $key}($value);
+            if (method_exists(static::class, 'set'.$key)) {
+                $value = static::{'set'.$key}($value);
             }
 
             if (property_exists($class, $lcFirstKey)) {

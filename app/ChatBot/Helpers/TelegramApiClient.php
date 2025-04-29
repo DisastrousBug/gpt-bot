@@ -4,6 +4,4 @@ namespace App\ChatBot\Helpers;
 
 use Telegram\Bot\Api;
 
-class TelegramApiClient extends Api
-{
-}
+class TelegramApiClient extends Api {}

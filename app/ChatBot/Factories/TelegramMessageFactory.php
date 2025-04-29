@@ -9,6 +9,6 @@ class TelegramMessageFactory extends AbstractFactory
 {
     public static function getDTO(): TelegramMessageDTO
     {
-        return new TelegramMessageDTO();
+        return new TelegramMessageDTO;
     }
 }
