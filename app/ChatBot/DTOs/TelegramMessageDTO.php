@@ -13,4 +13,6 @@ class TelegramMessageDTO extends AbstractDTO
     public ?string $replyText;
 
     public ?int $chatId;
+
+    public ?string $replyMediaUrl = null;
 }

@@ -7,6 +7,9 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
 use JsonSerializable;
 
+/**
+ * @implements Arrayable<string, mixed>
+ */
 class AbstractDTO implements Arrayable, DTO, JsonSerializable
 {
     public function toArray(): array

@@ -6,28 +6,31 @@ use App\ChatBot\DTOs\TelegramMessageDTO;
 use App\ChatBot\Helpers\TelegramApiClient;
 use Illuminate\Support\Str;
 use Psr\Http\Message\ResponseInterface;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
 
 class SendContentToTelegramAction
 {
-    public const SEND_TEXT = 'text';
+    public const string SEND_TEXT = 'text';
 
-    public const SEND_MEDIA = 'media';
+    public const string SEND_MEDIA = 'media';
 
     public function __construct(protected TelegramApiClient $telegramApiClient) {}
 
-    public function execute(TelegramMessageDTO $messageDTO, ResponseInterface $chatGPTResponse, $sendType = self::SEND_TEXT): void
+    /**
+     * @throws TelegramSDKException
+     */
+    public function execute(TelegramMessageDTO $messageDTO, ResponseInterface $chatGPTResponse, string $sendType = self::SEND_TEXT): void
     {
 
         if ($sendType === self::SEND_TEXT) {
             $this->telegramApiClient->sendMessage([
                 'chat_id' => $messageDTO->chatId,
-                'text' => $messageDTO->replyText.(((json_decode((string) ($chatGPTResponse?->getBody())))->choices[0])->message->content),
+                'text' => $messageDTO->replyText,
                 'reply_to_message_id' => $messageDTO->messageId,
             ]);
         } else {
-
-            if ($chatGPTResponse->getStatusCode() === 400) {
+            if (empty($messageDTO->replyMediaUrl)) {
                 $this->telegramApiClient->sendMessage([
                     'chat_id' => $messageDTO->chatId,
                     'text' => 'Не могу сгенерировать фото',
@@ -36,7 +39,8 @@ class SendContentToTelegramAction
 
                 return;
             }
-            $file = InputFile::create(((json_decode((string) ($chatGPTResponse?->getBody())))->data[0])->url, Str::random());
+
+            $file = InputFile::create($messageDTO->replyMediaUrl, Str::random());
 
             $this->telegramApiClient->sendPhoto([
                 'photo' => $file,
