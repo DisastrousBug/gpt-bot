@@ -2,6 +2,7 @@
 
 namespace App\ChatBot\Actions;
 
+use Illuminate\Support\Facades\Log;
 use App\ChatBot\DTOs\TelegramMessageDTO;
 use App\ChatBot\Helpers\TelegramApiClient;
 use Illuminate\Support\Str;
@@ -24,10 +25,14 @@ class SendContentToTelegramAction
     {
 
         if ($sendType === self::SEND_TEXT) {
-            $this->telegramApiClient->sendMessage([
+            $response = $this->telegramApiClient->sendMessage([
                 'chat_id' => $messageDTO->chatId,
                 'text' => $messageDTO->replyText,
                 'reply_to_message_id' => $messageDTO->messageId,
+            ]);
+
+            Log::info('TG send', [
+                'body'   => $response->getRawResponse(),
             ]);
         } else {
             if (empty($messageDTO->replyMediaUrl)) {
