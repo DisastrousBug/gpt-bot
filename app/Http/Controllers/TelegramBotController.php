@@ -18,7 +18,7 @@ class TelegramBotController extends Controller
     public function webhook(Request $request, ChatGPTAction $action): ResponseFactory|Response
     {
         // Get the incoming update from Telegram
-        $update = new Update(json_decode($request->getContent(), true));
+        $update = new Update(json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR));
 
         $baseSocialInstance = $update->getMessage();
 
