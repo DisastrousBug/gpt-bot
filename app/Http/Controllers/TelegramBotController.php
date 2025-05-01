@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
 use App\ChatBot\Actions\ChatGPTAction;
 use App\ChatBot\Factories\TelegramMessageFactory;
 use App\ChatBot\Helpers\TelegramApiClient;
@@ -17,6 +18,8 @@ class TelegramBotController extends Controller
 
     public function webhook(Request $request, ChatGPTAction $action): ResponseFactory|Response
     {
+        Log::info('TG WEBHOOK HIT', ['raw' => $request->getContent()]);
+
         // Get the incoming update from Telegram
         $update = new Update(json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR));
 
