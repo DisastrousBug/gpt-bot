@@ -2,6 +2,4 @@
 
 namespace App\Common\DTOs;
 
-interface DTO
-{
-}
+interface DTO {}

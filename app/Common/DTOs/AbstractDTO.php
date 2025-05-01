@@ -3,11 +3,14 @@
 namespace App\Common\DTOs;
 
 use Carbon\Carbon;
-use JsonSerializable;
-use Illuminate\Support\Str;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Str;
+use JsonSerializable;
 
-class AbstractDTO implements DTO, JsonSerializable, Arrayable
+/**
+ * @implements Arrayable<string, mixed>
+ */
+class AbstractDTO implements Arrayable, DTO, JsonSerializable
 {
     public function toArray(): array
     {

@@ -2,13 +2,15 @@
 
 namespace App\Common\Factories;
 
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Common\DTOs\AbstractDTO;
-use Illuminate\Support\Collection;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Common\ResourceModels\AbstractResourceModel;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
+/**
+ * @template T of AbstractDTO
+ */
 abstract class AbstractFactory implements Factory
 {
     public static function fromRequest(Request $request): AbstractDTO
@@ -26,16 +28,22 @@ abstract class AbstractFactory implements Factory
         return static::fromCollection(collect($request->validated()));
     }
 
-    public static function fromRequestValidatedWithFiles(Request $request): AbstractDTO
+    public static function fromRequestValidatedWithFiles(FormRequest $request): AbstractDTO
     {
         return static::fromCollection(collect(array_merge($request->validated(), $request->allFiles())));
     }
 
+    /**
+     * @param  array<string, mixed>  $array
+     */
     public static function fromArray(array $array): AbstractDTO
     {
         return static::fromCollection(collect($array));
     }
 
+    /**
+     * @param  Collection<string, mixed>  $collection
+     */
     public static function fromCollection(Collection $collection): AbstractDTO
     {
         $dto = static::getDTO();
@@ -43,14 +51,17 @@ abstract class AbstractFactory implements Factory
         return self::reader($dto, $collection);
     }
 
-    protected static function reader(AbstractDTO|AbstractResourceModel $class, Collection|array $collection): AbstractDTO|AbstractResourceModel
+    /**
+     * @param  Collection<string,mixed>|array<string,mixed>  $collection
+     */
+    protected static function reader(AbstractDTO $class, Collection|array $collection): AbstractDTO
     {
         foreach ($collection as $key => $value) {
             $key = Str::studly($key);
             $lcFirstKey = lcfirst($key);
 
-            if (method_exists(static::class, 'set' . $key)) {
-                $value = static::{'set' . $key}($value);
+            if (method_exists(static::class, 'set'.$key)) {
+                $value = static::{'set'.$key}($value);
             }
 
             if (property_exists($class, $lcFirstKey)) {

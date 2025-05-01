@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use App\ChatBot\Helpers\OpenAIClient;
-use Illuminate\Support\ServiceProvider;
 use App\ChatBot\Helpers\TelegramApiClient;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,13 +15,13 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(OpenAIClient::class, function () {
             return new OpenAIClient(['headers' => [
-                'Authorization' => 'Bearer ' . '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',
-                'Content-Type'  => 'application/json',
+                'Authorization' => 'Bearer ' . config('openai.api_key'),
+                'Content-Type' => 'application/json',
             ]]);
         });
 
         $this->app->singleton(TelegramApiClient::class, function () {
-            return new TelegramApiClient('6046988830:AAHqVVUOT9hBzRnyVlc4C9JolNhyEYWcxKk');
+            return new TelegramApiClient(config('telegram.bots.mybot.token'));
         });
     }
 

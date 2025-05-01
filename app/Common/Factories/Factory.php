@@ -2,10 +2,10 @@
 
 namespace App\Common\Factories;
 
-use Illuminate\Http\Request;
 use App\Common\DTOs\AbstractDTO;
-use Illuminate\Support\Collection;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 interface Factory
 {
@@ -17,7 +17,13 @@ interface Factory
 
     public static function fromRequestValidatedWithFiles(FormRequest $request): AbstractDTO;
 
+    /**
+     * @param  array<string, mixed>  $array
+     */
     public static function fromArray(array $array): AbstractDTO;
 
+    /**
+     * @param  Collection<string, mixed>  $collection
+     */
     public static function fromCollection(Collection $collection): AbstractDTO;
 }

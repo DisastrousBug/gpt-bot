@@ -8,9 +8,11 @@ class TelegramMessageDTO extends AbstractDTO
 {
     public ?string $message;
 
-    public ?string $messageId;
+    public ?int $messageId;
 
     public ?string $replyText;
 
-    public ?string $chatId;
+    public ?int $chatId;
+
+    public ?string $replyMediaUrl = null;
 }
