@@ -18,12 +18,12 @@ class TelegramBotController extends Controller
 
     public function webhook(Request $request, ChatGPTAction $action): ResponseFactory|Response
     {
-        Log::info('TG WEBHOOK HIT', ['raw' => $request->getContent()]);
 
         // Get the incoming update from Telegram
         $update = new Update(json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR));
 
         $baseSocialInstance = $update->getMessage();
+        Log::info('TG WEBHOOK HIT', ['raw' => $request->getContent(), 'obj' => [$update->toArray(), typeOf($update)]]);
 
         // Check if the message is a text message from the user
         if ($baseSocialInstance instanceof Message) {
